@@ -133,7 +133,7 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'full',
         'filebrowserBrowseUrl': '/ckeditor/browse/',  # Важно!
         'filebrowserUploadUrl': '/ckeditor/upload/',  # Важно!
-        'extraPlugins': 'filebrowser, iframe',  # Активирует плагин
+        'extraPlugins': 'filebrowser',  # Активирует плагин
     }
 }
 
