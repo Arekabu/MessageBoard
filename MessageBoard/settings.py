@@ -120,7 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -133,9 +133,27 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'full',
         'filebrowserBrowseUrl': '/ckeditor/browse/',  # Важно!
         'filebrowserUploadUrl': '/ckeditor/upload/',  # Важно!
-        'extraPlugins': 'filebrowser',  # Активирует плагин
+        'extraPlugins': 'Html5video',  # Активирует плагин
+
     }
 }
+
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': 'Custom',  # Измените 'full' на 'Custom' для точного контроля
+#         'toolbar_Custom': [
+#             ['Bold', 'Italic', 'Underline'],
+#             ['NumberedList', 'BulletedList'],
+#             ['Link', 'Unlink'],
+#             ['Image', 'Html5video'],  # Явно указываем кнопки
+#             ['RemoveFormat', 'Source']
+#         ],
+#         # 'extraPlugins': 'html5video',
+#         'width': '100%',
+#         'height': '300px',
+#     }
+# }
+
 
 AWS_QUERYSTRING_AUTH = False
 
