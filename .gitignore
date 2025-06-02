@@ -1,4 +1,5 @@
 /__pycache__/
 /MessageBoard/__pycache__/
-/Post/__pycache__/
-/Post/migrations/__pycache__/
+/post/__pycache__/
+/post/migrations/__pycache__/
+/templates/__pycache__/
