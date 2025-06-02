@@ -1,0 +1,15 @@
+{% load static %}
+<script src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+<script src="{% static 'ckeditor/ckeditor/plugins/iframe/plugin.js' %}"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <div class="content">
+        {{ post.text|safe }}
+    </div>
+</body>
+</html>
