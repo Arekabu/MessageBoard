@@ -38,10 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
     'ckeditor',
     'ckeditor_uploader',
     'post',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'MessageBoard.urls'
@@ -135,26 +140,8 @@ CKEDITOR_CONFIGS = {
         'filebrowserBrowseUrl': '/ckeditor/browse/',  # Важно!
         'filebrowserUploadUrl': '/ckeditor/upload/',  # Важно!
         'extraPlugins': 'html5video',  # Активирует плагин
-
     }
 }
-
-# CKEDITOR_CONFIGS = {
-#     'default': {
-#         'toolbar': 'Custom',  # Измените 'full' на 'Custom' для точного контроля
-#         'toolbar_Custom': [
-#             ['Bold', 'Italic', 'Underline'],
-#             ['NumberedList', 'BulletedList'],
-#             ['Link', 'Unlink'],
-#             ['Image', 'Html5video'],  # Явно указываем кнопки
-#             ['RemoveFormat', 'Source']
-#         ],
-#         # 'extraPlugins': 'html5video',
-#         'width': '100%',
-#         'height': '300px',
-#     }
-# }
-
 
 AWS_QUERYSTRING_AUTH = False
 
