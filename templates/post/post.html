@@ -1,13 +1,10 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ post.title }}</title>
-</head>
-<body>
-    <div class="content">
-        {{ post.text|safe }}
-    </div>
-</body>
-</html>
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+    {{ post.title }}
+{% endblock title %}
+
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.text|safe }}<p/>
+{% endblock content %}
