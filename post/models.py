@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 from ckeditor_uploader.fields import RichTextUploadingField
 
@@ -18,6 +19,10 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+
+    def get_absolute_url(self):
+        path = reverse('post_detail', args=[str(self.id)])
+        return path
 
 
 class PostCategory(models.Model):

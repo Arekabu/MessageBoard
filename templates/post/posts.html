@@ -1,0 +1,47 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Объявления
+{% endblock title %}
+
+{% block content %}
+<h3>Объявлений на странице: {{ posts|length }}</h3>
+<hr>
+{% if posts %}
+       <table align="left" cellpadding="10">
+           <tr>
+               <th>Дата</th>
+               <th>Автор</th>
+               <th>Заголовок</th>
+           </tr>
+
+           {% for post in posts %}
+           <tr align="right" valign="top">
+               <td>{{ post.date|date:'d.m.Y' }}</td>
+               <td><p style="text-indent: 25px;" align="justify" >{{ post.author }} </p></td>
+               <td><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></td>
+           </tr>
+           {% endfor %}
+       </table>
+{% else %}
+    <h3>Объявлений нет!</h3>
+{% endif %}
+
+{% if page_obj.has_previous %}
+    <a href="?page=1">1</a>
+        {% if page_obj.previous_page_number != 1 %}
+            ...
+            <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+        {% endif %}
+{% endif %}
+
+{{ page_obj.number }}
+
+{% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+        {% if paginator.num_pages != page_obj.next_page_number %}
+            ...
+            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+{% endif %}
+{% endblock content %}
