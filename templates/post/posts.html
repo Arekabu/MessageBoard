@@ -13,6 +13,7 @@
                <th>Дата</th>
                <th>Автор</th>
                <th>Заголовок</th>
+               <th>Категория</th>
            </tr>
 
            {% for post in posts %}
@@ -20,12 +21,14 @@
                <td>{{ post.date|date:'d.m.Y' }}</td>
                <td><p style="text-indent: 25px;" align="justify" >{{ post.author }} </p></td>
                <td><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></td>
+               <td><p style="text-indent: 25px;" align="justify" >{{ post.category }} </p></td>
            </tr>
            {% endfor %}
        </table>
 {% else %}
     <h3>Объявлений нет!</h3>
 {% endif %}
+
 
 {% if page_obj.has_previous %}
     <a href="?page=1">1</a>

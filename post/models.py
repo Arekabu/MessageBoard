@@ -13,7 +13,7 @@ class Category(models.Model):
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True)
-    category = models.ManyToManyField(Category, through='PostCategory')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     text = RichTextUploadingField()
 
@@ -23,11 +23,6 @@ class Post(models.Model):
     def get_absolute_url(self):
         path = reverse('post_detail', args=[str(self.id)])
         return path
-
-
-class PostCategory(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
