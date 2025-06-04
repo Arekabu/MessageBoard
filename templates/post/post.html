@@ -10,6 +10,8 @@
     {% if post.author == request.user %}
         <a href="{{ request.path }}/edit/" class="btn btn-secondary">Редактировать</a>
     {% endif %}
+<hr>
+<a href="{% url 'comment_create' post.pk %}" class="btn btn-outline-dark">Комментировать</a>
 
 
 {% endblock content %}

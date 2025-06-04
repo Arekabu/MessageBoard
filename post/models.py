@@ -28,6 +28,9 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now=True)
     approved = models.BooleanField(default=False)
+
+    def get_absolute_url(self):
+        return reverse('post_detail', kwargs={'pk': self.post.pk})
 

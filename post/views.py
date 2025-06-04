@@ -35,5 +35,11 @@ class PostList(ListView):
 class CommentCreate(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForm
-    template_name = 'post.html'
+    template_name = 'comment_create.html'
+
+    def form_valid(self, form):
+        form.instance.post = Post.objects.get(pk=self.kwargs['pk'])
+        form.instance.user = self.request.user
+
+        return super().form_valid(form)
 

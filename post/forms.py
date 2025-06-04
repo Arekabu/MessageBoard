@@ -25,3 +25,6 @@ class CommentForm(forms.ModelForm):
         fields = [
             'text',
         ]
+        labels = {
+            'text': 'Текст комментария:'
+        }
