@@ -3,3 +3,4 @@
 /post/__pycache__/
 /post/migrations/__pycache__/
 /templates/__pycache__/
+.env
