@@ -26,7 +26,7 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{% url 'user_page' request.user.pk %}">Страница пользователя</a>
                 </div>
             </div>
             <!-- Page content wrapper-->
@@ -55,6 +55,15 @@
                 </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                                {{ message }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                     {% block content %}
                     {{ flatpage.content }}
                     {% endblock content %}

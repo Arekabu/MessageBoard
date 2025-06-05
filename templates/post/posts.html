@@ -8,7 +8,7 @@
 <h3>Объявлений на странице: {{ posts|length }}</h3>
 <hr>
 {% if posts %}
-       <table align="left" cellpadding="10">
+       <table align="left" cellpadding="10" style="float: left; margin-bottom: 20px;">
            <tr>
                <th>Дата</th>
                <th>Автор</th>
@@ -28,23 +28,28 @@
 {% else %}
     <h3>Объявлений нет!</h3>
 {% endif %}
+<div style="clear: both;"></div>
 
+{% if page_obj.has_previous or page_obj.has_next %}
+<div style="text-align: center; margin: 20px 0;">
+    {% if page_obj.has_previous %}
+        <a href="?page=1">1</a>
+            {% if page_obj.previous_page_number != 1 %}
+                ...
+                <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+            {% endif %}
+    {% endif %}
 
-{% if page_obj.has_previous %}
-    <a href="?page=1">1</a>
-        {% if page_obj.previous_page_number != 1 %}
-            ...
-            <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
-        {% endif %}
+    {{ page_obj.number }}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+            {% if paginator.num_pages != page_obj.next_page_number %}
+                ...
+                <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+            {% endif %}
+    {% endif %}
+</div>
 {% endif %}
-
-{{ page_obj.number }}
-
-{% if page_obj.has_next %}
-    <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
-        {% if paginator.num_pages != page_obj.next_page_number %}
-            ...
-            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
-        {% endif %}
-{% endif %}
+<hr>
 {% endblock content %}

@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView, DeleteView, UpdateView
+from django.views.generic import CreateView, ListView, DetailView, DeleteView, UpdateView, View
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from .models import Post, Category, Comment
 from .forms import PostForm, CommentForm
 
@@ -10,6 +12,16 @@ class PostDetail(DetailView):
     model = Post
     template_name = 'post.html'
     context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.get_object()
+
+        comments = Comment.objects.filter(post=post, approved=True)
+        context['comments'] = comments
+
+        return context
+
 
 class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
@@ -58,4 +70,46 @@ class CommentCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
 
         return super().form_valid(form)
+
+class UserPage(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = User
+    template_name = 'user_page.html'
+    context_object_name = 'user'
+
+    def test_func(self):
+        user = self.get_object()
+
+        return user == self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+
+        comments = Comment.objects.filter(post__author=user)
+
+        context['comments'] = comments
+
+        return context
+
+
+class BulkApproveCommentsView(View):
+    def post(self, request):
+        comment_ids = request.POST.getlist('comment_ids')
+        action = request.POST.get('action')
+
+        if not comment_ids:
+            messages.error(request, "Выберите хотя бы один комментарий!")
+
+            return redirect('user_page', pk=request.user.pk)
+
+        comments = Comment.objects.filter(id__in=comment_ids)
+
+        if action == 'approve':
+            comments.update(approved=True)
+            messages.success(request, f"Одобрено {len(comments)} комментариев")
+        elif action == 'disapprove':
+            comments.update(approved=False)
+            messages.success(request, f"Отклонено {len(comments)} комментариев")
+
+        return redirect('user_page', pk=request.user.pk)
 

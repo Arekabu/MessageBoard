@@ -12,7 +12,26 @@
         <a href="{% url 'post_delete' post.pk %}" class="btn btn-danger">Удалить</a>
     {% endif %}
 <hr>
+{% if comments %}
+<h2>Комментарии:</h2>
+<br>
+<table align="left" cellpadding="10" style="float: left;">
+    <tr>
+        <th>Дата</th>
+        <th>Пользователь</th>
+        <th>Комментарий</th>
+    </tr>
+    {% for comment in comments %}
+    <tr>
+        <td>{{ comment.date|date:'d.m.Y' }}</td>
+        <td>{{ comment.user }}</td>
+        <td>{{ comment.text }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+<div style="clear: both;"></div>
+<hr>
 <a href="{% url 'comment_create' post.pk %}" class="btn btn-outline-dark">Комментировать</a>
-
 
 {% endblock content %}

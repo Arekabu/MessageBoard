@@ -1,0 +1,40 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Страница пользователя {{ user }}
+{% endblock title %}
+
+{% block content %}
+<form method="post" action="{% url 'bulk_approve_comments' %}">
+    {% csrf_token %}
+    {% if comments %}
+    <table align="left" cellpadding="10" style="float: left;">
+        <tr>
+            <th>Выбрать</th>
+            <th>Дата</th>
+            <th>Автор</th>
+            <th>Объявление</th>
+            <th>Текст</th>
+            <th>Одобрено</th>
+        </tr>
+
+        {% for comment in comments %}
+        <tr align="right" valign="top">
+            <td><input type="checkbox" name="comment_ids" value="{{ comment.id }}"></td>
+            <td>{{ comment.date|date:'d.m.Y' }}</td>
+            <td><p style="text-indent: 25px;" align="justify">{{ comment.user }}</p></td>
+            <td><a href="{% url 'post_detail' comment.post.pk %}">{{ comment.post.title }}</a></td>
+            <td><p style="text-indent: 25px;" align="justify">{{ comment.text }}</p></td>
+            <td>{{ comment.approved|yesno:"Да,Нет" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div style="clear: both;"></div>
+    <br>
+    <button type="submit" name="action" value="approve" class="btn btn-success">Одобрить выбранные</button>
+    <button type="submit" name="action" value="disapprove" class="btn btn-warning">Отклонить выбранные</button>
+    {% else %}
+        <h3>Комментариев нет!</h3>
+    {% endif %}
+</form>
+{% endblock content %}
