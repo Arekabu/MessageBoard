@@ -9,5 +9,4 @@ urlpatterns = [
     path('<int:pk>/delete/', PostDelete.as_view(), name='post_delete'),
     path('<int:pk>/comment/', CommentCreate.as_view(), name='comment_create'),
     path('', PostList.as_view(), name = 'post_list'),
-    path('posts/', PostList.as_view(), name = 'post_list'),
 ]
