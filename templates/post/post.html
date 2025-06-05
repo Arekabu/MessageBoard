@@ -9,6 +9,7 @@
     <p>{{ post.text|safe }}<p/>
     {% if post.author == request.user %}
         <a href="{{ request.path }}/edit/" class="btn btn-secondary">Редактировать</a>
+        <a href="{% url 'post_delete' post.pk %}" class="btn btn-danger">Удалить</a>
     {% endif %}
 <hr>
 <a href="{% url 'comment_create' post.pk %}" class="btn btn-outline-dark">Комментировать</a>

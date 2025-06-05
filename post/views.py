@@ -1,6 +1,7 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, DeleteView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Post, Category, Comment
 from .forms import PostForm, CommentForm
 
@@ -19,10 +20,25 @@ class PostCreate(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class PostUpdate(LoginRequiredMixin, UpdateView):
+class PostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
     template_name = 'post_edit.html'
+
+    def test_func(self):
+        post = self.get_object()
+
+        return post.author == self.request.user
+
+class PostDelete(LoginRequiredMixin, DeleteView, UserPassesTestMixin):
+    model = Post
+    template_name = 'post_delete.html'
+    success_url = reverse_lazy('post_list')
+
+    def test_func(self):
+        post = self.get_object()
+
+        return post.author == self.request.user
 
 class PostList(ListView):
     model = Post

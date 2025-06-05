@@ -23,9 +23,9 @@ from post.views import PostList
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('posts/', include('post.urls')),
     path("pages/", include("django.contrib.flatpages.urls")),
-    path('', PostList.as_view(), name = 'post_list'),
+    path('posts/', include('post.urls')),
+    path('', PostList.as_view()),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
