@@ -5,9 +5,18 @@
 {% endblock title %}
 
 {% block content %}
+<h1>Страница пользователя: {{ user }}</h1>
+<br>
+<h3>Фильтр комментариев по объявлению</h3>
+<br>
+<form method="get">
+    {{ filterset.form.as_p }}
+    <button type="submit" name="action" value="disapprove" class="btn btn-warning">Фильтр</button>
+</form>
+
 <form method="post" action="{% url 'bulk_approve_comments' %}">
     {% csrf_token %}
-    {% if comments %}
+    {% if filterset.qs %}
     <table align="left" cellpadding="10" style="float: left;">
         <tr>
             <th>Выбрать</th>
@@ -18,7 +27,7 @@
             <th>Одобрено</th>
         </tr>
 
-        {% for comment in comments %}
+        {% for comment in filterset.qs %}
         <tr align="right" valign="top">
             <td><input type="checkbox" name="comment_ids" value="{{ comment.id }}"></td>
             <td>{{ comment.date|date:'d.m.Y' }}</td>
@@ -31,8 +40,12 @@
     </table>
     <div style="clear: both;"></div>
     <br>
-    <button type="submit" name="action" value="approve" class="btn btn-success">Одобрить выбранные</button>
-    <button type="submit" name="action" value="disapprove" class="btn btn-warning">Отклонить выбранные</button>
+    <table>
+        <tr>
+            <td align="left" width="25%"><button type="submit" name="action" value="approve" class="btn btn-success">Одобрить выбранные</button></td>
+            <td align="right" width="75%"><button type="submit" name="action" value="delete" class="btn btn-danger">Удалить выбранные</button></td>
+        </tr>
+    </table>
     {% else %}
         <h3>Комментариев нет!</h3>
     {% endif %}

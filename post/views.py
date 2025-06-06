@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from .models import Post, Category, Comment
 from .forms import PostForm, CommentForm
+from .filters import CommentFilter
 
 
 class PostDetail(DetailView):
@@ -71,7 +72,7 @@ class CommentCreate(LoginRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
-class UserPage(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class UserPage(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = User
     template_name = 'user_page.html'
     context_object_name = 'user'
@@ -81,13 +82,18 @@ class UserPage(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
         return user == self.request.user
 
+    # def get_queryset(self):
+    #     user = self.get_object()
+    #     self.filterset = CommentFilter(self.request.GET, Comment.objects.filter(post__author=user))
+    #
+    #     return self.filterset.qs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         user = self.get_object()
-
         comments = Comment.objects.filter(post__author=user)
-
-        context['comments'] = comments
+        context['filterset'] = CommentFilter(self.request.GET, comments)
 
         return context
 
@@ -107,9 +113,10 @@ class BulkApproveCommentsView(View):
         if action == 'approve':
             comments.update(approved=True)
             messages.success(request, f"Одобрено {len(comments)} комментариев")
-        elif action == 'disapprove':
-            comments.update(approved=False)
-            messages.success(request, f"Отклонено {len(comments)} комментариев")
+        elif action == 'delete':
+            deleted_count = comments.count()
+            comments.delete()
+            messages.success(request, f"Удалено {deleted_count} комментариев")
 
         return redirect('user_page', pk=request.user.pk)
 
