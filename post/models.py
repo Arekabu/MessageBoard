@@ -21,7 +21,7 @@ class Post(models.Model):
     text = RichTextUploadingField()
 
     def __str__(self):
-        return f"{self.date.strftime("%Y-%m-%d")} {self.title}"
+        return f"{self.date.strftime("%Y-%m-%d %H:%M")} {self.title}"
 
     def get_absolute_url(self):
         path = reverse('post_detail', args=[str(self.id)])
