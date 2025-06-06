@@ -1,10 +1,9 @@
 from time import strftime
-
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 from django.contrib.auth.models import User
 from ckeditor_uploader.fields import RichTextUploadingField
-import datetime
 
 
 class Category(models.Model):
@@ -21,7 +20,8 @@ class Post(models.Model):
     text = RichTextUploadingField()
 
     def __str__(self):
-        return f"{self.date.strftime("%Y-%m-%d %H:%M")} {self.title}"
+        date = timezone.localtime(self.date)
+        return f"{ date.strftime("%Y-%m-%d %H:%M")} {self.title}"
 
     def get_absolute_url(self):
         path = reverse('post_detail', args=[str(self.id)])
