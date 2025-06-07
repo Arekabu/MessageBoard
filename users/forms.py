@@ -15,3 +15,9 @@ class CustomRegisterForm(UserCreationForm):
             "password2",
         )
 
+
+class VerificationForm(forms.Form):
+    code = forms.CharField(
+        label='Код подтверждения',
+        max_length=6
+    )

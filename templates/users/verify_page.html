@@ -1,0 +1,17 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Подтверждение регистрации
+{% endblock title %}
+
+{% block content %}
+
+<h2>Подтверждение регистрации</h2>
+<p>На вашу почту отправлен код подтверждения. Введите его ниже:</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Продолжить" class="btn btn-secondary">
+</form>
+
+{% endblock content %}
