@@ -25,6 +25,7 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path("pages/", include("django.contrib.flatpages.urls")),
     path('posts/', include('post.urls')),
+    path('users/', include('users.urls')),
     path('', PostList.as_view()),
     path('profile/<int:pk>', UserPage.as_view(), name = 'user_page'),
     path('comments/bulk-approve/', BulkApproveCommentsView.as_view(), name='bulk_approve_comments'),
