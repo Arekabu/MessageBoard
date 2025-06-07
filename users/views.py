@@ -12,10 +12,11 @@ class CustomRegisterView(CreateView):
     model = User
     form_class = CustomRegisterForm
     template_name = 'signup_page.html'
-    success_url = ''
+    success_url = 'verify_page'
 
     def form_valid(self, form):
         pass
+
 
 
 
