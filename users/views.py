@@ -72,9 +72,7 @@ class UserPage(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     context_object_name = 'user'
 
     def test_func(self):
-        user = self.get_object()
-
-        return user == self.request.user
+        return self.get_object() == self.request.user
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
