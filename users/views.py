@@ -15,6 +15,7 @@ class CustomRegisterView(CreateView):
     success_url = ''
 
     def form_valid(self, form):
+        pass
 
 
 
