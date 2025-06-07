@@ -64,7 +64,11 @@ ROOT_URLCONF = 'MessageBoard.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates/post')],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates/post'),
+            os.path.join(BASE_DIR, 'templates/users')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

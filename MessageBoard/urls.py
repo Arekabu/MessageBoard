@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from post.views import PostList, UserPage, BulkApproveCommentsView
+from post.views import PostList, BulkApproveCommentsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +27,6 @@ urlpatterns = [
     path('posts/', include('post.urls')),
     path('users/', include('users.urls')),
     path('', PostList.as_view()),
-    path('profile/<int:pk>', UserPage.as_view(), name = 'user_page'),
     path('comments/bulk-approve/', BulkApproveCommentsView.as_view(), name='bulk_approve_comments'),
 ]
 

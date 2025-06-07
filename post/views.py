@@ -72,32 +72,6 @@ class CommentCreate(LoginRequiredMixin, CreateView):
 
         return super().form_valid(form)
 
-class UserPage(LoginRequiredMixin, UserPassesTestMixin, DetailView):
-    model = User
-    template_name = 'user_page.html'
-    context_object_name = 'user'
-
-    def test_func(self):
-        user = self.get_object()
-
-        return user == self.request.user
-
-    # def get_queryset(self):
-    #     user = self.get_object()
-    #     self.filterset = CommentFilter(self.request.GET, Comment.objects.filter(post__author=user))
-    #
-    #     return self.filterset.qs
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        user = self.get_object()
-        comments = Comment.objects.filter(post__author=user)
-        context['filterset'] = CommentFilter(self.request.GET, comments)
-
-        return context
-
-
 class BulkApproveCommentsView(View):
     def post(self, request):
         comment_ids = request.POST.getlist('comment_ids')
