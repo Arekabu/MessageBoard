@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+SITE_URL = 'http://127.0.0.1:8000'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -151,8 +153,15 @@ CKEDITOR_CONFIGS = {
 AWS_QUERYSTRING_AUTH = False
 
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Mail settings
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = '465'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')

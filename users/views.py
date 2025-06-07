@@ -14,6 +14,9 @@ class CustomRegisterView(CreateView):
     template_name = 'signup_page.html'
     success_url = ''
 
+    def form_valid(self, form):
+
+
 
 class UserPage(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = User
