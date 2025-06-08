@@ -72,7 +72,8 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
             os.path.join(BASE_DIR, 'templates/post'),
-            os.path.join(BASE_DIR, 'templates/users')
+            os.path.join(BASE_DIR, 'templates/users'),
+            os.path.join(BASE_DIR, 'templates/emails'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

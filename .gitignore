@@ -3,6 +3,10 @@
 /post/__pycache__/
 /post/migrations/__pycache__/
 /templates/__pycache__/
+/templates/emails/__pycache__/
+/templates/flatpages/__pycache__/
+/templates/post/__pycache__/
+/templates/users/__pycache__/
 /users/__pycache__/
 /users/migrations/__pycache__/
 .env

@@ -85,8 +85,13 @@ class BulkApproveCommentsView(View):
         comments = Comment.objects.filter(id__in=comment_ids)
 
         if action == 'approve':
-            comments.update(approved=True)
-            messages.success(request, f"Одобрено {len(comments)} комментариев")
+            approved_count = 0
+            for comment in comments:
+                comment.approved = True
+                comment.save(update_fields=['approved'])  # Явно указываем поле
+                approved_count += 1
+
+            messages.success(request, f"Одобрено {approved_count} комментариев")
         elif action == 'delete':
             deleted_count = comments.count()
             comments.delete()
