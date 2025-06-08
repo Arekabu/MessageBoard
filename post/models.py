@@ -12,6 +12,7 @@ class Category(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True)
@@ -26,6 +27,7 @@ class Post(models.Model):
     def get_absolute_url(self):
         path = reverse('post_detail', args=[str(self.id)])
         return path
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

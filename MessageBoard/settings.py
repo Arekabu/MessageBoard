@@ -34,7 +34,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,8 +49,10 @@ INSTALLED_APPS = [
     'users',
 ]
 
+
 SITE_ID = 1
 SITE_URL = 'http://127.0.0.1:8000'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,7 +65,9 @@ MIDDLEWARE = [
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
+
 ROOT_URLCONF = 'MessageBoard.urls'
+
 
 TEMPLATES = [
     {
@@ -86,6 +89,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'MessageBoard.wsgi.application'
 
@@ -139,6 +143,7 @@ STATIC_URL = 'static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
@@ -154,6 +159,7 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+
 AWS_QUERYSTRING_AUTH = False
 
 
@@ -162,6 +168,7 @@ AWS_QUERYSTRING_AUTH = False
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 # Mail settings
 EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = '465'
@@ -169,6 +176,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
 
 # Celery settings
 CELERY_BROKER_URL = 'redis://:'+os.getenv('REDIS_PASSWORD')+'@'+os.getenv('REDIS_ENDPOINT')+':'+os.getenv('REDIS_PORT')

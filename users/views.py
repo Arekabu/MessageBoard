@@ -86,4 +86,3 @@ class UserPage(LoginRequiredMixin, UserPassesTestMixin, DetailView):
             request=self.request
         )
         return context
-

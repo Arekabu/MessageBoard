@@ -1,12 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, DeleteView, UpdateView, View
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.models import User
-from .models import Post, Category, Comment
+from .models import Post, Comment
 from .forms import PostForm, CommentForm
-from .filters import CommentFilter
 
 
 class PostDetail(DetailView):
@@ -33,6 +31,7 @@ class PostCreate(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
+
 class PostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
@@ -42,6 +41,7 @@ class PostUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         post = self.get_object()
 
         return post.author == self.request.user
+
 
 class PostDelete(LoginRequiredMixin, DeleteView, UserPassesTestMixin):
     model = Post
@@ -53,6 +53,7 @@ class PostDelete(LoginRequiredMixin, DeleteView, UserPassesTestMixin):
 
         return post.author == self.request.user
 
+
 class PostList(ListView):
     model = Post
     ordering = '-date'
@@ -60,6 +61,7 @@ class PostList(ListView):
     context_object_name = 'posts'
     paginate_by = 10
     paginate_orphans = 2
+
 
 class CommentCreate(LoginRequiredMixin, CreateView):
     model = Comment
@@ -71,6 +73,7 @@ class CommentCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
 
         return super().form_valid(form)
+
 
 class BulkApproveCommentsView(View):
     def post(self, request):
@@ -98,4 +101,3 @@ class BulkApproveCommentsView(View):
             messages.success(request, f"Удалено {deleted_count} комментариев")
 
         return redirect('user_page', pk=request.user.pk)
-
