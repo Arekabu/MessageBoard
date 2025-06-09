@@ -1,8 +1,10 @@
 from celery import shared_task
+from datetime import datetime, timezone, timedelta
 from django.conf import settings
-from django.core.mail import send_mail
+from django.contrib.auth.models import User
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
-from .models import Comment
+from .models import Comment, Post
 
 
 @shared_task
@@ -76,3 +78,29 @@ def approved_comment_notification(comment_pk):
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=[email]
     )
+
+
+@shared_task
+def weekly_notification():
+    today = datetime.now(timezone.utc)
+    last_week = today - timedelta(days=7)
+    posts = Post.objects.filter(date__gte=last_week)
+    subscribers = set(User.objects.exclude(email='').values_list('email', flat=True))
+
+    html_content = render_to_string(
+        'weekly_posts.html',
+        {
+            'link': settings.SITE_URL,
+            'posts': posts,
+        }
+    )
+
+    msg = EmailMultiAlternatives(
+        subject='Статьи за неделю',
+        body='',
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=subscribers,
+    )
+
+    msg.attach_alternative(html_content, 'text/html')
+    msg.send()
