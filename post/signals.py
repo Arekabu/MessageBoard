@@ -11,7 +11,7 @@ def notify_about_new_comment(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=Comment)
-def notify_about_new_comment(sender, instance, created, **kwargs):
+def notify_about_approved_comment(sender, instance, created, **kwargs):
     if (not created and
             kwargs.get('update_fields') and
             'approved' in kwargs['update_fields'] and

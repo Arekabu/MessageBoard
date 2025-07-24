@@ -5,11 +5,15 @@
     <title>Уведомление</title>
 </head>
 <body>
-  <h2>Здравствуйте! Новые статьи за последнюю неделю:</h2>
-  <ul>
-    {% for post in posts %}
-      <li><a href="{{ link }}{{ post.get_absolute_url }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
+    {% if posts %}
+        <h2>Здравствуйте! Новые статьи за последнюю неделю:</h2>
+        <ul>
+            {% for post in posts %}
+                <li><a href="{{ link }}{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h2>Новых статей нет, но рассылка работает!</h2>
+    {% endif %}
 </body>
 </html>
