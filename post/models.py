@@ -22,7 +22,7 @@ class Post(models.Model):
 
     def __str__(self):
         date = timezone.localtime(self.date)
-        return f"{ date.strftime("%Y-%m-%d %H:%M")} {self.title}"
+        return f"{ date.strftime('%Y-%m-%d %H:%M')} {self.title}"
 
     def get_absolute_url(self):
         path = reverse('post_detail', args=[str(self.id)])
