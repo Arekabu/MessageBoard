@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+      - ./db:/app/db  # монтируем папку с базой
+    env_file:
+      - .env
+    environment:
+      - PYTHONPATH=/app
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             gunicorn MessageBoard.wsgi:application --bind 0.0.0.0:8000"
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./staticfiles:/app/staticfiles  # статика для nginx
+      - ./media:/app/media    # медиа для nginx
+    depends_on:
+      - web

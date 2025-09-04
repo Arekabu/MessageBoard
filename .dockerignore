@@ -1,0 +1,11 @@
+.git
+.gitignore
+.env
+*.pyc
+__pycache__
+staticfiles
+media
+docker-compose.yml
+*.md
+*.example
+READ

@@ -9,4 +9,6 @@
 /templates/users/__pycache__/
 /users/__pycache__/
 /users/migrations/__pycache__/
+/staticfiles/
+docker-compose.override.yml
 .env
