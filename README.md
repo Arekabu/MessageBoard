@@ -4,6 +4,7 @@ A forum platform built with Django, Docker, Celery, and Redis.
 
 - User registration and authentication
 - Forum posts and comments
+- Comment moderation system
 - Email notifications
 - Periodic tasks with Celery Beat
 - Docker containerization
