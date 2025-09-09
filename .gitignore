@@ -12,3 +12,5 @@
 /staticfiles/
 docker-compose.override.yml
 .env
+celerybeat-schedule*
+*.dbm
