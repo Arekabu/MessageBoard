@@ -5,7 +5,6 @@ services:
     build: .
     volumes:
       - .:/app
-      - ./db:/app/db  # монтируем папку с базой
     env_file:
       - .env
     environment:
@@ -26,7 +25,6 @@ services:
     build: .
     volumes:
       - .:/app
-      - ./celerybeat-schedule:/app/celerybeat-schedule
     env_file:
       - .env
     command: celery -A MessageBoard beat --loglevel=info
