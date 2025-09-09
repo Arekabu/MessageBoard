@@ -10,8 +10,6 @@ services:
       - .env
     environment:
       - PYTHONPATH=/app
-      - CELERY_BROKER_URL=redis://:${REDIS_PASSWORD}@${REDIS_ENDPOINT}:${REDIS_PORT}
-      - CELERY_RESULT_BACKEND=redis://:${REDIS_PASSWORD}@${REDIS_ENDPOINT}:${REDIS_PORT}
     command: >
       sh -c "python manage.py migrate --noinput &&
              gunicorn MessageBoard.wsgi:application --bind 0.0.0.0:8000"
@@ -22,20 +20,15 @@ services:
       - .:/app
     env_file:
       - .env
-    environment:
-      - CELERY_BROKER_URL=redis://:${REDIS_PASSWORD}@${REDIS_ENDPOINT}:${REDIS_PORT}
-      - CELERY_RESULT_BACKEND=redis://:${REDIS_PASSWORD}@${REDIS_ENDPOINT}:${REDIS_PORT}
     command: celery -A MessageBoard worker --loglevel=info
 
   celery_beat:
     build: .
     volumes:
       - .:/app
+      - ./celerybeat-schedule:/app/celerybeat-schedule
     env_file:
       - .env
-    environment:
-      - CELERY_BROKER_URL=redis://:${REDIS_PASSWORD}@${REDIS_ENDPOINT}:${REDIS_PORT}
-      - CELERY_RESULT_BACKEND=redis://:${REDIS_PASSWORD}@${REDIS_ENDPOINT}:${REDIS_PORT}
     command: celery -A MessageBoard beat --loglevel=info
 
   nginx:
