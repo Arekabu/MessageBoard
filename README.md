@@ -1,6 +1,7 @@
 # MessageBoard - Django Forum Application
-## A forum platform built with Django, Docker, Celery, and Redis.
-<br>
+
+A forum platform built with Django, Docker, Celery, and Redis.
+
 ## 🚀 Features
 
 - User registration and authentication
