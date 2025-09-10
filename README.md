@@ -50,7 +50,7 @@ A forum platform built with Django, Docker, Celery, and Redis.
    docker-compose up -d --build   
    ```
 
-**4. Create superuser**
+**4. Create superuser (skip if using the test database)**
 
    ```
    docker-compose exec web python manage.py createsuperuser
@@ -60,4 +60,8 @@ A forum platform built with Django, Docker, Celery, and Redis.
 
    - Web: http://localhost:8000
    - Admin: http://localhost:8000/admin
+     
+     **Test database superuser:**\
+     **Login:** admin\
+     **Password:** admin
  
