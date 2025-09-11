@@ -64,4 +64,86 @@ A forum platform built with Django, Docker, Celery, and Redis.
      **Test database superuser:**\
      **Login:** admin\
      **Password:** admin
+
+### Local Development (Without Docker)
+
+1. Create virtual environment
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # Linux/Mac
+   # or
+   venv\Scripts\activate     # Windows
+   ```
+   
+2. Install dependencies
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+   
+3. Run services
+
+   ```bash
+   # Terminal 1: Django
+   python manage.py runserver
+   
+   # Terminal 2: Celery Worker
+   celery -A MessageBoard worker --loglevel=info
+   
+   # Terminal 3: Celery Beat
+   celery -A MessageBoard beat --loglevel=info
+   ```
+
+## 🐳 Docker Services
+### The application consists of multiple services:
+| **Service** | **Port** | **Description** |
+|-------------|----------|-----------------|
+| web | 8000 | Django + Gunicorn |
+| nginx | 8000 | Reverse proxy |
+| celery_worker | - | Async task processing |
+| celery_beat | - | Periodic tasks scheduler |
+
+## ⚙️ Environment Variables
+Create ```.env``` file from ```.env.example```:
+```bash
+# Email (Mail.ru example)
+EMAIL_HOST = smtp.mail.ru
+EMAIL_PORT = 465
+EMAIL_HOST_USER = example@example.com
+EMAIL_HOST_PASSWORD = password
+DEFAULT_FROM_EMAIL = example@example.com
+
+# Redis (Celery broker)
+REDIS_PASSWORD = password
+REDIS_ENDPOINT = redis_endpoint_link
+REDIS_PORT = 123456
+
+# Django
+ALLOWED_HOSTS=localhost,127.0.0.1,::1
+CSRF_TRUSTED_ORIGINS=http://localhost:8000,http://127.0.0.1:8000
+SITE_URL = http://127.0.0.1:8000
+```
+
+##📋 Available Commands
+
+### Docker Commands
+```bash
+# Start services
+docker-compose up -d
+
+# Stop services
+docker-compose down
+
+# View logs
+docker-compose logs -f web
+docker-compose logs -f celery_worker
+docker-compose logs -f celery_beat
+
+# Run management commands
+docker-compose exec web python manage.py migrate
+docker-compose exec web python manage.py collectstatic
+```
+
+
  
