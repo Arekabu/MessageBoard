@@ -33,7 +33,7 @@ A forum platform built with Django, Docker, Celery, and Redis.
 **1. Clone the repository**
    
    ```bash
-   git clone https://github.com/yourusername/MessageBoard.git
+   git clone https://github.com/Arekabu/MessageBoard.git
    cd MessageBoard
    ```
 
