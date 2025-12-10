@@ -5,3 +5,4 @@ docker-compose.override.yml
 celerybeat-schedule*
 *.dbm
 venv/
+.run/
